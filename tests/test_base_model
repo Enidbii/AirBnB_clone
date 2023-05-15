@@ -1,1 +1,9 @@
+#!/usr/bin/python3
+""" test base model module """
+
+import unittest
+from models.base_model import BaseModel
+
+class TestBaseModel(unittest.TestCase):
+    def test___init__(self):
 
