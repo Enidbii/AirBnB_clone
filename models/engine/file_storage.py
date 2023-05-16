@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ FileStorage module """
 
-import os
 import json
 from models.base_model import BaseModel
 from models.place import Place
@@ -10,17 +9,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.state import State
 from models.review import Review
-
-
-classes = {
-        "BaseModel": BaseModel,
-        "User": User,
-        "Place": Place,
-        "City": City,
-        "State": State,
-        "Review": Review,
-        "Amenity": Amenity
-        }
 
 
 class FileStorage:
@@ -44,7 +32,7 @@ class FileStorage:
         Attributes:
             obj: <obj class name>.id
         """
-        
+ 
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
