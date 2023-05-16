@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ FileStorage module """
 
+import os
 import json
 from models.base_model import BaseModel
 from models.place import Place
@@ -20,6 +21,7 @@ classes = {
         "Review": Review,
         "Amenity": Amenity
         }
+
 
 class FileStorage:
     """
@@ -51,8 +53,8 @@ class FileStorage:
     def save(self):
         """ serializes __objects to the JSON file(path: __file_path """
         ourdict = []
-        for i in FileStorage.__objects.values():
-            ourdict.append(i.to_dict())
+        for obj in FileStorage.__objects.values():
+            ourdict.append(obj.to_dict())
 
         with open(FileStorage.__file_path, "w") as write_file:
             json.dump(ourdict, write_file)
@@ -65,7 +67,7 @@ class FileStorage:
                 with open(FileStorage__file_path, "r") as read_file:
                     ourdictobj = json.load(read_file)
                     for key, value in ourdictobj.items():
-                        i = self.classes[value['__class__']](**value)
-                        FileStorage.__objects[key] = i
+                        obj = self.classes[value['__class__']](**value)
+                        FileStorage.__objects[key] = obj
             except Exception:
                 pass
