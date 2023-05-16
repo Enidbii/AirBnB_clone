@@ -39,7 +39,7 @@ class FileStorage(BaseModel):
     def reload(self):
         """ deserializes json file to __objects """
         try:
-            with open(FileStorage__file_path, "r", encoding="utf-8") as read_file:
+            with open(FileStorage__file_path, "r") as read_file:
                 ourdictobj = json.load(read_file)
                 for i in ourdictobj.values():
                     name_o_cls = i["__class__"]
