@@ -2,6 +2,7 @@
 """ FileStorage module """
 
 import json
+import os
 from models.base_model import BaseModel
 
 
@@ -26,7 +27,7 @@ class FileStorage(BaseModel):
         Attributes:
             obj: <obj class name>.id
         """
-        key = {}.{}.format(obj.__class__.__name__, obj.id)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
@@ -39,11 +40,11 @@ class FileStorage(BaseModel):
     def reload(self):
         """ deserializes json file to __objects """
         try:
-            with open(FileStorage__file_path, "r", encoding="utf-8") as read_file:
+            with open(FileStorage__file_path, "r") as read_file:
                 ourdictobj = json.load(read_file)
                 for i in ourdictobj.values():
                     name_o_cls = i["__class__"]
-                    del i{"__class__"]
+                    del i["__class__"]
                     self.new(eval(name_o_class)(**i))
         except FileNotFoundError:
             return
