@@ -32,8 +32,8 @@ class FileStorage:
         Attributes:
             obj: <obj class name>.id
         """
- 
-        class_word = __class__.__name__
+
+        class_word = obj.__class__.__name__
         FileStorage.__objects["{}.{}".format(class_word, obj.id)] = obj
 
     def save(self):
