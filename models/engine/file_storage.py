@@ -4,9 +4,10 @@
 import json
 from models.base_model import BaseModel
 
+
 class FileStorage(BaseModel):
-    """ 
-    serializes instances to JSON file and vice versa 
+    """
+    serializes instances to JSON file and vice versa
 
     private class attributes:
         __file_path: string file to JSON file
@@ -14,9 +15,6 @@ class FileStorage(BaseModel):
     """
     __file_path = "file.json"
     __objects = {}
-    def __init__(self):
-        """ initialises instance attributes """
-        pass
 
     def all(self):
         """ returns dictionary __objects """
@@ -28,16 +26,18 @@ class FileStorage(BaseModel):
         Attributes:
             obj: <obj class name>.id
         """
-        key = {}.{}.format(obj.__class__.__name__,obj.id)
+        key = {}.{}.format(obj.__class__.__name__, obj.id)
         type(self).__objects[key] = obj
 
     def save(self):
         """ serializes __objects to the JSON file(path: __file_path """
-        with open(__file_path, "w") as write_file:
-            json.dump(__objects, write_file)
+        with open(FileStorage.__file_path, "w") as write_file:
+            json.dump(FileStorage.__objects, write_file)
 
     def reload(self):
         """ deserializes json file to __objects """
-        if __file_path:
-            with open(__file_path, "r") as read_file:
-                __objects = json.load(read_file)
+        try:
+            with open(__file_path, "r", encoding="utf-8") as read_file:
+                FileStorage__objects = json.load(read_file)
+        except FileNotFoundError:
+            pass
