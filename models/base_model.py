@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-""" Base model module: base_model.py
-    defines all common attributes/methods for other classes
+""" Base model module """
 
-"""
 import uuid
 from datetime import datetime
-from models import storage
+import models.storage
 
 
 class BaseModel:

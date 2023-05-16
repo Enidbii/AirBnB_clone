@@ -26,7 +26,7 @@ class FileStorage(BaseModel):
         Attributes:
             obj: <obj class name>.id
         """
-        key = {}.{}.format(obj.__class__.__name__, obj.id)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
@@ -43,7 +43,7 @@ class FileStorage(BaseModel):
                 ourdictobj = json.load(read_file)
                 for i in ourdictobj.values():
                     name_o_cls = i["__class__"]
-                    del i{"__class__"]
+                    del i["__class__"]
                     self.new(eval(name_o_class)(**i))
         except FileNotFoundError:
             return
