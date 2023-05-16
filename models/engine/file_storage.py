@@ -3,7 +3,23 @@
 
 import json
 from models.base_model import BaseModel
+from models.place import Place
+from models.user import User
+from models.city import City
+from models.amenity import Amenity
+from models.state import State
+from models.review import Review
 
+
+classes = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "Place": Place,
+        "City": City,
+        "State": State,
+        "Review": Review,
+        "Amenity": Amenity
+        }
 
 class FileStorage:
     """
@@ -34,19 +50,22 @@ class FileStorage:
 
     def save(self):
         """ serializes __objects to the JSON file(path: __file_path """
-        ourdict = FileStorage.__objects
-        ourdictobj = {obj: ourdict[obj].to_dict() for obj in ourdict.keys()}
+        ourdict = []
+        for i in FileStorage.__objects.values():
+            ourdict.append(i.to_dict())
+
         with open(FileStorage.__file_path, "w") as write_file:
-            json.dump(ourdictobj, write_file)
+            json.dump(ourdict, write_file)
 
     def reload(self):
         """ deserializes json file to __objects """
-        try:
-            with open(FileStorage__file_path, "r") as read_file:
-                ourdictobj = json.load(read_file)
-                for i in ourdictobj.values():
-                    name_o_cls = i["__class__"]
-                    del i["__class__"]
-                    self.new(eval(name_o_class)(**i))
-        except FileNotFoundError:
+        if os.path.exists(FileStorage.__file_path) is True:
             return
+            try:
+                with open(FileStorage__file_path, "r") as read_file:
+                    ourdictobj = json.load(read_file)
+                    for key, value in ourdictobj.items():
+                        i = self.classes[value['__class__']](**value)
+                        FileStorage.__objects[key] = i
+            except Exception:
+                pass
