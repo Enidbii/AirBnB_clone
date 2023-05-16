@@ -5,7 +5,7 @@ import json
 from models.base_model import BaseModel
 
 
-class FileStorage(BaseModel):
+class FileStorage:
     """
     serializes instances to JSON file and vice versa
 
@@ -26,6 +26,9 @@ class FileStorage(BaseModel):
         Attributes:
             obj: <obj class name>.id
         """
+        if obj.id in FileStorage.__objects:
+            print("exists")
+            return
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
