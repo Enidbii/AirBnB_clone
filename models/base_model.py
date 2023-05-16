@@ -17,23 +17,17 @@ class BaseModel:
         It initialises the basemodel class
 
         """
-        if kwargs:
-            dateobject = '%Y-%m-%dT%H:%M:%S.%f'
+        dateobject = '%Y-%m-%dT%H:%M:%S.%f'
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        if len(kwargs) != 0:
             for key, value in kwargs.items():
-                if key == "__class__":
-                    continue
-                elif key == "created_at":
-                    self.created_at = datetime.strptime(kwargs["created_at"],
-                                                        dateobject)
-                elif key == "updated_at":
-                    self.updated_at = datetime.strptime(kwargs["updated_at"],
-                                                        dateobject)
+                if key == "created_at" or key == "updated_at":
+                    self.__dict__[key] = datetime.strptime(value, dateobject)
                 else:
-                    setattr(self, key, value)
+                    self.__dict__[key] = value
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
